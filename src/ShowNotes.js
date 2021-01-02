@@ -11,6 +11,9 @@ import {
 function ShowNotes({ notes }) {
   const [editableNotes, setEditableNotes] = useState([]);
   const [date, setDate] = useState();
+  // eslint-disable-next-line
+  const [sortedDateWise, setSortedDateWise] = useState(false);
+  const [partitionPeriod, setPartitionPeriod] = useState("none");
 
   useEffect(() => {
     setEditableNotes(notes);
@@ -18,16 +21,28 @@ function ShowNotes({ notes }) {
 
   const handleSort = (sortingParameter) => {
     if (sortingParameter === "newest") {
+      setSortedDateWise(false);
+      setPartitionPeriod("none");
       setEditableNotes(handleNewest(notes));
     } else if (sortingParameter === "oldest") {
+      setSortedDateWise(false);
+      setPartitionPeriod("none");
       setEditableNotes(handleOldest(notes));
     } else if (sortingParameter === "today") {
+      setSortedDateWise(true);
+      setPartitionPeriod("day wise");
       setEditableNotes(handleDateWise(notes, 1));
     } else if (sortingParameter === "week") {
+      setSortedDateWise(true);
+      setPartitionPeriod("week wise");
       setEditableNotes(handleDateWise(notes, 7));
     } else if (sortingParameter === "month") {
+      setSortedDateWise(true);
+      setPartitionPeriod("month wise");
       setEditableNotes(handleDateWise(notes, 30));
     } else {
+      setSortedDateWise(true);
+      setPartitionPeriod("year wise");
       setEditableNotes(handleDateWise(notes, 365));
     }
   };
@@ -106,9 +121,26 @@ function ShowNotes({ notes }) {
           </li>
         </ul>
       </div>
-      {editableNotes.map((obj) => (
-        <Note note={obj} key={obj.id} />
-      ))}
+      {!sortedDateWise ? (
+        <div>
+          {editableNotes.map((obj) => (
+            <Note note={obj} key={obj.id} />
+          ))}
+        </div>
+      ) : (
+        <div>
+          {editableNotes.map((dataArray, i) => (
+            <div key={i}>
+              <h3>
+                {partitionPeriod} {i + 1}
+              </h3>
+              {dataArray.map((obj) => (
+                <Note note={obj} key={obj.id} />
+              ))}
+            </div>
+          ))}
+        </div>
+      )}
     </div>
   );
 }
