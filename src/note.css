@@ -1,0 +1,18 @@
+.main-note > p {
+  font-size: 0.9rem;
+}
+
+.main-note > a {
+  padding: 0.2rem 0.4rem;
+  font-size: 0.9rem;
+}
+
+.main-note {
+  background-color: #fff;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+  border-radius: 5px;
+}
+
+.main-note > button:hover {
+  text-decoration: underline;
+}

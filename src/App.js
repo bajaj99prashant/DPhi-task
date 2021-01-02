@@ -1,23 +1,20 @@
-import logo from './logo.svg';
-import './App.css';
+import "./App.css";
+import React from "react";
+import Header from "./Header";
+import ViewDiary from "./ViewDiary";
+import CreateNote from "./CreateNote";
+import EditNote from "./EditNote";
+import { Router } from "@reach/router";
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className="App bg-light">
+      <Header />
+      <Router>
+        <ViewDiary path="/" />
+        <CreateNote path="/create-note" />
+        <EditNote path="/edit-note/:id" />
+      </Router>
     </div>
   );
 }
