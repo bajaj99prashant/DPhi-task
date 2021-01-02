@@ -7,17 +7,19 @@ function CreateNote() {
   // eslint-disable-next-line
   const [state, dispatch] = useDiaryNotesAPI();
   const [title, setTitle] = useState("");
+  const [date, setDate] = useState();
   const [description, setDescription] = useState("");
   const [err, setErr] = useState("");
   const handleCreateTodo = (e) => {
     setErr("");
     e.preventDefault();
-    if (title !== "" && description !== "") {
+    if (title !== "" && description !== "" && date !== undefined) {
+      console.log(+new Date(date));
       const note = {
         id: uuid(),
         title: title,
         description: description,
-        timestamp: +new Date(),
+        timestamp: +new Date(date),
       };
 
       dispatch({
@@ -57,6 +59,18 @@ function CreateNote() {
           >
             {description}
           </textarea>
+        </div>
+
+        <div className="form-group">
+          <label htmlFor="date">Date</label>
+          <input
+            type="date"
+            name="date"
+            value={date}
+            onChange={(e) => setDate(e.target.value)}
+            className="form-control form-control-sm"
+            placeholder="Enter title"
+          />
         </div>
         <p className="text-center my-2 text-danger">{err}</p>
         <button type="submit" className="btn btn-sm btn-primary">

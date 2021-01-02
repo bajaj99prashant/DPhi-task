@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import Note from "./Note";
+import "./showNotes.css";
 import {
   handleNewest,
   handleOldest,
@@ -32,9 +33,14 @@ function ShowNotes({ notes }) {
   };
 
   const handleDateSort = (val) => {
-    setDate(val);
-    setEditableNotes(handleByTimestamp(notes, new Date(date).getTime()));
-    console.log(editableNotes);
+    if (val) {
+      setDate(val);
+      setEditableNotes(handleByTimestamp(notes, new Date(val).getTime()));
+    } else {
+      setDate("");
+      setEditableNotes(handleByTimestamp(notes, 0));
+    }
+    console.log(val);
   };
 
   return (
@@ -93,7 +99,7 @@ function ShowNotes({ notes }) {
           <li className="nav-item">
             <input
               type="date"
-              className="form-control-sm form-control mt-1"
+              className="form-control-sm form-control mt-1 input-date"
               value={date}
               onChange={(e) => handleDateSort(e.target.value)}
             />
